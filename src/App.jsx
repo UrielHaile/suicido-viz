@@ -3,7 +3,7 @@ import { ParallaxLayerText } from './components/ParallaxLayerText.jsx'
 import Estadisticas from './components/estadisticas.jsx'
 import State from './components/State.jsx'
 import Observador from './components/observador.jsx'
-
+import React, { useState } from "react";
 /* Estilos */
 import './App.css'
 
@@ -18,11 +18,26 @@ import CuerdaExt1 from "./img/CuerdaExt1.png";
 import pildoras from "./img/pildoras.png";
 import logoUG from "./img/UG.png";
 
+import TimeSeries from './components/TimeSeries.jsx'
+import Slider from './components/slideBar.jsx'
 export default function App() {
+  const files=["1998.geojson","1999.geojson","2000.geojson","2001.geojson","2002.geojson","2003.geojson","2004.geojson","2005.geojson",
+    "2006.geojson","2007.geojson","2008.geojson","2009.geojson","2010.geojson","2011.geojson","2012.geojson","2013.geojson","2014.geojson","2015.geojson",
+    "2016.geojson","2017.geojson","2018.geojson","2019.geojson","2020.geojson","2021.geojson","2022.geojson"
+  ];
+  const [selectedFile, setSelectedFile] = useState(files[21]); 
+
+  const years = files.map((file) => file.replace(".geojson", "")); 
+
+  const handleButtonClick = (index) => {
+    setSelectedFile(files[index]); 
+    console.log("Archivo seleccionado:", files[index]);
+  };
   const alignCenter = { display: "flex", alignItems: "center" };
+
   return (
     <div className="App">
-      <Parallax pages={26} style={{ top: "0", left: "0" } }>
+      <Parallax pages={29} style={{ top: "0", left: "0" } }>
         {/* EXTENSIÓN CUERDA ------------------------- */}
         <div style={{position:"relative", transform:"translateZ(0)"}}>
           <ParallaxLayer offset={0} speed={0.01}>
@@ -239,25 +254,36 @@ export default function App() {
           <div className="titulo-mapa">
             <h6>Mapa</h6>
           </div>
-          <State />
+        <Slider years={years}/>
+
+          {/****At this part it will be the buttons for each year */}
         </ParallaxLayer>
-     <ParallaxLayer offset={21} speed={0.5} sticky={{ start: 20, end: 21 }} className="gradient2">
-          <div className="gradient2"></div>
-     </ParallaxLayer>
-        <ParallaxLayer offset={21} speed={0.5} sticky={{ start: 20, end: 21 }} className="gradient">
+      
+        <ParallaxLayer offset={19} sticky={{ start: 20, end:21 }} speed={0.5} className="mapa-container">
+        
+       
+          <TimeSeries/>
+
+
+
+        </ParallaxLayer>
+        <ParallaxLayer offset={20} speed={0.5} sticky={{ start: 22, end: 23 }} className="gradient">
           <div className="gradient"></div>
         </ParallaxLayer>
+     <ParallaxLayer offset={21} speed={0.5} sticky={{ start: 23, end: 23 }} className="gradient2">
+          <div className="gradient2"></div>
+     </ParallaxLayer>
         {/* VISUALIZACIÓN DE ESTADO ---------------------	*/}
         <ParallaxLayer
-          offset={20}
-          sticky={{ start: 20, end: 21 }}
+          offset={23}
+          sticky={{ start: 22, end: 23 }}
           speed={0.5}
           style={{ ...alignCenter, justifyContent: "center" }}
         >
           <Estadisticas />
         </ParallaxLayer>
         {/* CRÉDITOS ---------------------	*/}
-        <ParallaxLayer offset={23} speed={0.5} sticky={{ start: 24,end: 24}} className="dedicatoria-container">
+        <ParallaxLayer offset={23} speed={0.5} sticky={{ start: 25,end: 26}} className="dedicatoria-container">
           <div className="dedicatoria">
             <p>
               Dedicamos este proyecto a quienes luchan contra la desesperación, recordándoles que la esperanza persiste.
@@ -274,7 +300,7 @@ export default function App() {
             </p>
           </div>
         </ParallaxLayer>
-        <ParallaxLayer offset={25} speed={0.5} sticky={{ start: 25, end: 25.5}} className="creditos-parallax">
+        <ParallaxLayer offset={25} speed={0.5} sticky={{ start: 28, end: 29}} className="creditos-parallax">
           <div className="creditos-container">
             <div className="creditos">
               <div className="nombres">

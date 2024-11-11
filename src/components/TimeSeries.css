@@ -1,0 +1,6 @@
+
+    .titulo h6{
+        font-size: clamp(1rem, 9vw, 2.5rem);
+        color:red
+    }
+
