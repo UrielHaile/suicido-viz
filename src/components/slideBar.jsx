@@ -41,7 +41,7 @@ export default function Slider({ years }) {
 
   return (
     <div className="section-slider">
-      <label htmlFor="year-slider" style={{ fontSize: '1.2rem', marginBottom: '10px' }}>
+      <label htmlFor="year-slider" style={{ fontSize: '1.2rem', marginBottom: '10px' ,color:"white"}}>
         Selecciona un año: {selectedYear}
       </label>
       <input
@@ -58,7 +58,7 @@ export default function Slider({ years }) {
       {/* Botón para iniciar y detener el recorrido automático */}
       <button
         onClick={isRunning ? stopAutoSlider : startAutoSlider}
-        style={{ marginLeft: '10px', padding: '10px 20px', fontSize: '1rem' }}
+        style={{ marginLeft: '10px', padding: '10px 20px', fontSize: '1rem' ,backgroundColor:"#4b4b4b",color:"white"}}
       >
         {isRunning ? "Detener" : "Recorrer años"}
       </button>

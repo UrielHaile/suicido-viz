@@ -9,11 +9,11 @@ export default function TimeSeries() {
   const [results, setResults] = useState([]);
   const [selectedResult, setSelectedResult] = useState(defaultCity);
   const { loading, data: timeSeriesData } = useCityTimeSeries(selectedResult.name);
-  
+  const {loading1,data:timeSeriesDataDefault}=useCityTimeSeries("León");
   const svgRef = useRef();
   const containerRef = useRef();
   const tooltipRef = useRef(); // Referencia al tooltip
-  const [dimensions, setDimensions] = useState({ width: 600, height: 400 });
+  const [dimensions, setDimensions] = useState({ width: 600, height: 500 });
   
   const handleResultClick = (result) => {
     setSelectedResult(result);
@@ -46,13 +46,14 @@ export default function TimeSeries() {
 
   const yScale = d3.scaleLinear()
     .domain([0, timeSeriesData && timeSeriesData.length > 0
-      ? d3.max(timeSeriesData, (d) => d.count)
+      ? d3.max(timeSeriesDataDefault, (d) => d.count)
       : 1])
     .range([dimensions.height - 50, 50]);
 
   const line = d3.line()
     .x((d) => xScale(new Date(d.year, 0, 1)))
     .y((d) => yScale(d.count));
+  
 
   useEffect(() => {
     if (loading || !timeSeriesData || timeSeriesData.length === 0) {
@@ -62,9 +63,9 @@ export default function TimeSeries() {
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
 
-    svg.style("background-color", "#f9f9f9");
+    svg.style("background-color", "transparent");
 
-    const axisColor = "#333";
+    const axisColor = "#fff";
 
     // Eje X con años y color de contraste
     svg.append("g")
@@ -78,7 +79,14 @@ export default function TimeSeries() {
     .attr("y", 5)
     .attr("x", 25)
     .style("text-anchor", "middle"); // Alinear las etiquetas al centro
-
+    svg.append("text")
+      .attr("x", -dimensions.height / 2) // Centrar el texto verticalmente
+      .attr("y", 15) // Ajustar el desplazamiento horizontal
+      .attr("transform", "rotate(-90)") // Rotar el texto para el eje Y
+      .attr("text-anchor", "middle") // Centrar el texto
+      .text("Suicidios") // Establecer el texto
+      .style("font-size", "15px")
+      .attr("fill", "white");
     svg.select(".x-axis path")
       .attr("stroke", axisColor)
       .attr("stroke-width", 1.5);
@@ -95,7 +103,14 @@ export default function TimeSeries() {
       .selectAll("text")
       .attr("fill", axisColor)
       .style("font-size", "12px");
-
+    svg.append("text")
+      .attr("x", dimensions.width / 2) // Centrar horizontalmente
+      .attr("y", dimensions.height ) // Ajustar el desplazamiento horizontal
+     // Rotar el texto para el eje Y
+      .attr("text-anchor", "middle") // Centrar el texto
+      .text("Años") // Establecer el texto
+      .style("font-size", "18px")
+      .attr("fill", "white");
     svg.select(".y-axis path")
       .attr("stroke", axisColor)
       .attr("stroke-width", 1.5);
@@ -110,7 +125,7 @@ export default function TimeSeries() {
       .attr("class", "line")
       .attr("d", line)
       .attr("fill", "none")
-      .attr("stroke", "#ff6347")
+      .attr("stroke", "red")
       .attr("stroke-width", 3)
       .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
@@ -129,13 +144,13 @@ export default function TimeSeries() {
       .attr("cx", (d) => xScale(new Date(d.year, 0, 1)))
       .attr("cy", (d) => yScale(d.count))
       .attr("r", 4)
-      .attr("fill", "#ff6347");
+      .attr("fill", "red");
 
     // Tooltip al pasar sobre los puntos
     points.on("mouseover", function(event, d) {
       d3.select(this)
         .attr("r", 6) // Aumentar el tamaño del círculo
-        .attr("fill", "#ff0000"); // Cambiar color al pasar el mouse
+        .attr("fill","#ff6347"); // Cambiar color al pasar el mouse
 
       // Mostrar el tooltip
       const tooltip = d3.select(tooltipRef.current);
@@ -147,7 +162,7 @@ export default function TimeSeries() {
     .on("mouseout", function(event, d) {
       d3.select(this)
         .attr("r", 4) // Volver al tamaño original
-        .attr("fill", "#ff6347"); // Volver al color original
+        .attr("fill","red" ); // Volver al color original
 
       // Ocultar el tooltip
       const tooltip = d3.select(tooltipRef.current);
@@ -164,7 +179,7 @@ export default function TimeSeries() {
         
         <h6 style={{color:"#fff" }}>Serie de tiempo de {municipio}</h6>
       </header>
-      <div ref={containerRef} style={{ width: "100%", maxWidth: "800px" , boxShadow: "0 0 2.0em .5em white"}} className="image-container">
+      <div ref={containerRef} style={{ width: "100%", maxWidth: "800px" }} className="image-container">
         {loading ? (
           <h1>Loading...</h1>
         ) : timeSeriesData && timeSeriesData.length > 0 ? (

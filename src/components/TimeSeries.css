@@ -4,3 +4,7 @@
         color:red
     }
 
+    :root {
+        --color-fuente: #ffffff;
+        --color-fondo: #000;
+      }

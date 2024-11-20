@@ -26,8 +26,8 @@
   .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 3vw;
-    height: 3vw;
+    width: 2vw;
+    height: 2vw;
     border-radius: 50%;
     background: #ff6347;
     cursor: pointer;
@@ -44,5 +44,6 @@
   label {
     font-size: 2vw;
     color: #333;
+    
   }
   
