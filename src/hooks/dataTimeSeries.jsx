@@ -12,7 +12,7 @@ export function useCityTimeSeries(selectedCity) {
     Promise.all(
         years.map(year =>
           
-          d3.csv(`./src/data/db/mun_count_${year}.csv`).then(data => {
+          d3.csv(`./db/mun_count_${year}.csv`).then(data => {
             console.log(`./data/db/mun_count_${year}.csv`);
             const municipioData = data.find(d => d.municipio === selectedCity);
             return {
