@@ -3,7 +3,10 @@
     height: 100%;
     background-color: #fff;
 }
-
+:root {
+    --color-fuente: #ffffff;
+    --color-fondo: #000;
+  }
 .barra-busqueda {
     position: absolute;
     top: 10%;
@@ -103,6 +106,7 @@
     background-color:#000 ;
     overflow: hidden;
     text-align: center;
+    color:var(--color-fuente);
   }
 
 @media screen and (max-width: 800px) and (min-width: 100px) {

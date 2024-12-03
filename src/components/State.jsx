@@ -5,8 +5,9 @@ import City from "./City";
 import "./State.css";
 import { Fragment } from "react";
 
-export default function State() {
-  const { mapData } = useMapTools("gto.geojson");
+export default function State({selectedFile}) {
+  
+  const { mapData } = useMapTools(selectedFile);
   const width = 500;
   const height = 500;
 
